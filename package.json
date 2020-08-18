@@ -1,0 +1,30 @@
+{
+  "name": "@sashido/teachablemachine-node",
+  "version": "1.0.0",
+  "description": "Simplifies integration with Teachable Machine models from Google",
+  "author": "Team SashiDo <hello@sashido.io>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "tensorflow",
+    "tensorflowjs",
+    "classification",
+    "teachable machine",
+    "google"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "@teachablemachine/image": "^0.8.4",
+    "@tensorflow/tfjs": "^2.3.0",
+    "canvas": "2.6.1",
+    "jsdom": "16.2.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
