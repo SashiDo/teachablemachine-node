@@ -1,6 +1,6 @@
 # SashiDo Teachable Machine v1.0.0
 
-The package empowers you to load any image classification model trained with Teachable Machine in a your [SashiDo](https://www.sashido.io/en/) application.  
+The package empowers you to deploy any image classification model trained with Teachable Machine in a [SashiDo](https://www.sashido.io/en/) application.  
 
 # Install
 
@@ -28,7 +28,7 @@ npm install @sashido/teachablemachine-node
 
 ![  ](https://media-blog.sashido.io/content/images/2020/08/export_tendorflow.js.png)
 
-3. Pass the URL to SashiDo Teachable and use the classify method to get predictions.
+3. Pass the URL to SashiDo Teachable to load the modeland. Next, let it have the image URL and call `classify` to get the predictions.
 
 # Example
 ```
@@ -46,9 +46,9 @@ model.classify({
   console.log('ERROR', e);
 });
 ```
-# Pull requests Welcome
+# Contribute
 
-Contributions of any kind are welcome to share their awesome ideas and take part in creating affordable Machine Learning projects. 
+Contributors of any kind are welcome. Share your awesome improvements in a pull request and take part in our mission to create affordable Machine Learning projects. 
 
 # License
 
