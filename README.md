@@ -1,12 +1,21 @@
 # SashiDo Teachable Machine v1.0.0
 
-The package empowers you to load any image classification models trained with Teachable Machine in a Node.JS environment. 
+The package empowers you to load any image classification model trained with Teachable Machine in a your SashiDo application.  
 
 # Install
 
-Run the following line to your Node.JS project directory.
+Each SashiDo application comes with a private GitHub repo that stores your server-side logic. Simply add the package to the package.json file of your project.
+
+- Add the following line to your dependencies in the package.json
+```
+  "@sashido/teachablemachine-node": "1.0.0"
+
+```
+OR
+ - simply run the following command to your local project and then push changes to the SashiDo app's repo.
 
 `npm install @sashido/teachablemachine-node`
+
 
 # Usage
 
