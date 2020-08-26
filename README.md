@@ -26,6 +26,8 @@ npm install @sashido/teachablemachine-node
 
 2. Make sure that you select Tensorflow.js format when exporting. That way your model will be uploaded (for free) and you will receive an access URL.
 
+![  ](https://media-blog.sashido.io/content/images/2020/08/export_tendorflow.js.png)
+
 3. Pass the URL to SashiDo Teachable and use the classify method to get predictions.
 
 # Example
