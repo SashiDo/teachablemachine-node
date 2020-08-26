@@ -4,7 +4,7 @@ The package empowers you to load any image classification model trained with Tea
 
 # Install
 
-Each SashiDo application comes with a private GitHub repo that stores your server-side logic. Simply add the package to the package.json file of your project.
+Each SashiDo application comes with a private GitHub repo that stores your server-side logic. Simply add the package to the package.json file of your project, you have two ways to go:
 
 - Add the following line to your dependencies in the package.json
 ```
@@ -12,7 +12,7 @@ Each SashiDo application comes with a private GitHub repo that stores your serve
 
 ```
 OR
- - simply run the following command to your local project and then push changes to the SashiDo app's repo.
+ - Run the following command to your local project and then push changes to the SashiDo app's repo.
 
 `npm install @sashido/teachablemachine-node`
 
