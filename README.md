@@ -1,10 +1,10 @@
 # SashiDo Teachable Machine v1.0.0
 
-The package empowers you to load any image classification model trained with Teachable Machine in a your SashiDo application.  
+The package empowers you to load any image classification model trained with Teachable Machine in a your [SashiDo](https://www.sashido.io/en/) application.  
 
 # Install
 
-Each SashiDo application comes with a private GitHub repo that stores your server-side logic. Simply add the package to the package.json file of your project, you have two ways to go:
+Each SashiDo application comes with a private GitHub repo that stores your [Cloud Code](https://docs.parseplatform.org/cloudcode/guide/) server-side logic. Simply add the package to the package.json file of your project, you have two ways to go:
 
 - Add the following line to your dependencies in the package.json
 ```sh
