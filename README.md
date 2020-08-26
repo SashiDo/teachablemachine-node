@@ -1,6 +1,6 @@
 # SashiDo Teachable Machine v1.0.0
 
-This module empowers you to load any image classification models trained with Teachable Machine in a Node.JS environment. 
+The package empowers you to load any image classification models trained with Teachable Machine in a Node.JS environment. 
 
 # Install
 
