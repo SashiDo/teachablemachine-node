@@ -26,7 +26,7 @@ yarn add @sashido/teachablemachine-node
 
 ![  ](https://media-blog.sashido.io/content/images/2020/08/export_tendorflow.js.png)
 
-3. Pass the URL to SashiDo Teachable to load the modeland. Next, let it have the image URL and call `classify` to get the predictions.
+3. Pass the URL to SashiDo Teachable to load the model. Next, let it have the image URL and call `classify` to get the predictions.
 
 # Example
 ```
