@@ -19,7 +19,7 @@ const retryOperation = (operation, delay, times, retriesCounter = 0) => new Prom
     })
     .catch(({ message }) => {
       if (retriesCounter === 0) {
-        console.info('@@@@', message);
+        console.info("[@sashido/teachablemachine-node] -", message);
       }
 
       if (times - 1 > 0) {
@@ -56,7 +56,7 @@ class SashiDoTeachable {
     try {
       this.model = await tmImage.load(`${modelUrl}model.json`, `${modelUrl}metadata.json`);
     } catch (e) {
-      console.error(e);
+      console.error("[@sashido/teachablemachine-node] -", e);
     }
   }
 
@@ -77,7 +77,7 @@ class SashiDoTeachable {
     const { imageUrl } = params;
 
     if (!imageUrl && imageUrl !== "") {
-      console.error("Missing config!");
+      console.error("[@sashido/teachablemachine-node] -", "Missing config!");
       return Promise.reject("Missing config!");
     }
 
@@ -94,7 +94,7 @@ class SashiDoTeachable {
       const predictions = await this.model.predict(image);
       results = predictions.sort(byProbabilty);
     } catch (e) {
-      console.error(e);
+      console.error("[@sashido/teachablemachine-node] -", e);
       results.error = err;
       return results;
     }
