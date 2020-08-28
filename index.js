@@ -9,16 +9,6 @@ global.document = dom.window.document;
 global.HTMLVideoElement = dom.window.HTMLVideoElement;
 
 
-function getConfig(params = {}) {
-  const { modelUrl } = params;
-  if (!modelUrl || modelUrl === "") {
-    console.error("Missing config!");
-  }
-
-  return params;
-}
-
-
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
 
@@ -52,10 +42,11 @@ const byProbabilty = (predictionA, predictionB) => {
 
 class SashiDoTeachable {
   constructor(params) {
-    const config = getConfig(params);
-    this.config = config;
+    this.config = {
+      ...params,
+    };
 
-    this.loadModel(config);
+    this.loadModel();
   }
 
 
@@ -70,26 +61,27 @@ class SashiDoTeachable {
   }
 
 
-  async checkModel(params) {
-    const { model } = this;
+  async checkModel(cb) {
+    const { model, config } = this;
+    const { modelUrl } = config;
 
     if (model) {
-      return Promise.resolve({ cb: () => this.inference(params) });
+      return Promise.resolve({ cb });
     }
 
-    return Promise.reject({ message: `Loading model: ${this.config.modelUrl}` });
+    return Promise.reject({ message: `Loading model: ${modelUrl}` });
   }
 
 
   async classify(params) {
     const { imageUrl } = params;
-    if (
-      (!imageUrl && imageUrl !== "")
-    ) {
+
+    if (!imageUrl && imageUrl !== "") {
       console.error("Missing config!");
       return Promise.reject("Missing config!");
     }
-    return retryOperation(() => this.checkModel(params, () => this.inference(params)), 1000, 6); // method, delay, retries
+
+    return retryOperation(() => this.checkModel(() => this.inference(params)), 1000, 6); // method, delay, retries
   }
 
   async inference({ imageUrl }) {
