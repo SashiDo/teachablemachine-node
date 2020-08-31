@@ -4,13 +4,13 @@ The package empowers you to load any image classification model trained with Tea
 
 # Install
 
-- Install from npm 
+- Install using npm 
 
 ```sh
 npm install @sashido/teachablemachine-node
 ```
 
-- Install from yarn
+- Install using yarn
 
 ```sh
 yarn add @sashido/teachablemachine-node
