@@ -36,6 +36,8 @@ yarn add @sashido/teachablemachine-node
 SashiDo's team loves animals and it is no wonder that our first model was trained to recognize whether an image has a dog on it or no.
 😊 We've collected a dataset of more than 2000 images of dogs, cats, horses, other animals, people and everyday objects and uploaded them into two different classes into Teachable Machine. A big shoutout to [Unsplash.com](https://unsplash.com/) as a great plaform for free photos. Check it out in case you're just starting and do not have raw data yet.
 
+![](https://media-blog.sashido.io/content/images/2020/09/ezgif.com-gif-maker.gif)
+
 You can load our **Dog <-> Not a Dog** model using the this URL and folloing the example below:
 
 ```
@@ -47,11 +49,11 @@ https://teachablemachine.withgoogle.com/models/mHPehnXQd/
 const SashidoTeachable = require("@sashido/teachablemachine-node");
 
 const model = new SashidoTeachable({
-  modelUrl: "https://teachablemachine.withgoogle.com/models/kG5U1WBQe/"
+  modelUrl: "https://teachablemachine.withgoogle.com/models/mHPehnXQd/"
 });
 
 model.classify({
-  imageUrl: "https://cgtvm9ubnmtf2ckeqzvksppjgclcsk.files-sashido.cloud/9167d747f112142776f546815102e32b_1.png",
+  imageUrl: "https://media-blog.sashido.io/content/images/2020/09/SashiDo_Dog.jpg",
 }).then((r) => {
   console.log("NSFW results:", r);
 }).catch((e) => {
@@ -60,7 +62,7 @@ model.classify({
 ```
 # Contribute
 
-Contributors of any kind are welcome. Share your awesome improvements in a pull request and take part in our mission to create affordable Machine Learning projects. 
+Contributors of any kind are welcome. Share your awesome improvements in a pull request and take part in our mission to make Machine Learning affordable. 
 
 # License
 
