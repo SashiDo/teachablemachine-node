@@ -33,7 +33,7 @@ yarn add @sashido/teachablemachine-node
 
 ### Play around with the model that SashiDo Team already trained.
 
-SashiDo's team loves animals and it is no wonder that our first model was trained to recognize whether an image has a dog on it or no.As
+SashiDo's team loves animals and it is no wonder that our first model was trained to recognize whether an image has a dog on it or no.
 😊 We've collected a dataset of more than 2000 images of dogs, cats, horses, other animals, people and everyday objects and uploaded them into two different classes into Teachable Machine. A big shoutout to [Unsplash.com](https://unsplash.com/) as a great plaform for free photos. Check it out in case you're just starting and do not have raw data yet.
 
 You can load our **Dog <-> Not a Dog** model using the this URL and folloing the example below:
