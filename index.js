@@ -1,4 +1,5 @@
 const tmImage = require("@teachablemachine/image");
+const isImageUrl = require('is-image-url');
 const canvas = require("canvas");
 const { JSDOM } = require("jsdom");
 const dom = new JSDOM("");
@@ -42,16 +43,14 @@ const byProbabilty = (predictionA, predictionB) => {
 
 class SashiDoTeachable {
   constructor(params) {
-    this.config = {
-      ...params,
-    };
-
-    this.loadModel();
+    this.loadModel(params);
   }
 
 
-  async loadModel() {
-    const { modelUrl } = this.config;
+  async loadModel({ modelUrl }) {
+    if (!modelUrl || modelUrl === "") {
+      console.error("[@sashido/teachablemachine-node] -", "Missing model URL!");
+    }
 
     try {
       this.model = await tmImage.load(`${modelUrl}model.json`, `${modelUrl}metadata.json`);
@@ -61,45 +60,30 @@ class SashiDoTeachable {
   }
 
 
-  async checkModel(cb) {
-    const { model, config } = this;
-    const { modelUrl } = config;
-
-    if (model) {
-      return Promise.resolve({ cb });
-    }
-
-    return Promise.reject({ message: `Loading model: ${modelUrl}` });
-  }
-
-
   async classify(params) {
+    const { model } = this;
     const { imageUrl } = params;
 
-    if (!imageUrl && imageUrl !== "") {
-      console.error("[@sashido/teachablemachine-node] -", "Missing config!");
-      return Promise.reject("Missing config!");
+    if (!isImageUrl(imageUrl)) {
+      console.error("[@sashido/teachablemachine-node] -", "Image URL is not valid!");
+      return Promise.reject({ error: "Image URL is not valid!" });
     }
 
-    return retryOperation(() => this.checkModel(() => this.inference(params)), 1000, 6); // method, delay, retries
-  }
-
-  async inference({ imageUrl }) {
-    let results = {};
+    if (!model) {
+      console.error("[@sashido/teachablemachine-node] -", "Model is not ready!");
+      return Promise.reject({ error: "Model is not ready!" });
+    }
 
     try {
-      const image = new canvas.Image()
+      const image = new canvas.Image();
       image.src = imageUrl;
 
       const predictions = await this.model.predict(image);
-      results = predictions.sort(byProbabilty);
-    } catch (e) {
-      console.error("[@sashido/teachablemachine-node] -", e);
-      results.error = err;
-      return results;
+      return predictions.sort(byProbabilty);
+    } catch (error) {
+      console.error("[@sashido/teachablemachine-node] -", error);
+      return Promise.reject({ error });
     }
-
-    return results;
   }
 }
 

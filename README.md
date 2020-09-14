@@ -4,7 +4,7 @@ The package empowers you to load any image classification model trained with Tea
 
 # Install
 
-- Install using npm 
+- Install using npm
 
 ```sh
 npm install @sashido/teachablemachine-node
@@ -34,7 +34,7 @@ yarn add @sashido/teachablemachine-node
 ### Play around with the model that SashiDo Team already trained.
 
 SashiDo's team loves animals and it is no wonder that our first model was trained to recognize whether an image has a dog on it or no.
-😊 We've collected a dataset of more than 2000 images of dogs, cats, horses, other animals, people and everyday objects and uploaded them into two different classes with Teachable Machine. 
+😊 We've collected a dataset of more than 2000 images of dogs, cats, horses, other animals, people and everyday objects and uploaded them into two different classes with Teachable Machine.
 
 ![](https://media-blog.sashido.io/content/images/2020/09/example.gif)
 
@@ -46,28 +46,61 @@ You can load our **Dog <-> Not a Dog** model using the this URL and folloing the
 https://teachablemachine.withgoogle.com/models/mHPehnXQd/
 ```
 
-# Example
+# Examples
 
-Here's a quick example on how to load the model in your project.
+1. Here's a quick example on how to load the model in your project.
 
 ```
-const SashidoTeachable = require("@sashido/teachablemachine-node");
+const TeachableMachine = require("@sashido/teachablemachine-node");
 
-const model = new SashidoTeachable({
+const model = new TeachableMachine({
   modelUrl: "https://teachablemachine.withgoogle.com/models/mHPehnXQd/"
 });
 
 model.classify({
   imageUrl: "https://media-blog.sashido.io/content/images/2020/09/SashiDo_Dog.jpg",
-}).then((r) => {
-  console.log("NSFW results:", r);
+}).then((results) => {
+  console.log("Results:", r);
 }).catch((e) => {
-  console.log('ERROR', e);
+  console.log("ERROR", e);
 });
 ```
+
+2. Here's a quick example with Express.
+
+```
+const express = require("express");
+const TeachableMachine = require("@sashido/teachablemachine-node");
+
+const model = new TeachableMachine({
+  modelUrl: "https://teachablemachine.withgoogle.com/models/mHPehnXQd/"
+});
+
+const app = express();
+const port = 3000;
+
+app.get("/image/classify", async (req, res) => {
+  const { url } = req.query;
+
+  return model.classify({
+    imageUrl: url,
+  }).then((results) => {
+    console.log(results);
+    return res.json(results);
+  }).catch((e) => {
+    console.error(e);
+    res.status(500).send("Something is wrong!")
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+```
+
 # Contribute
 
-Contributors of any kind are welcome. Share your awesome improvements in a pull request and take part in our mission to make Machine Learning affordable. 
+Contributors of any kind are welcome. Share your awesome improvements in a pull request and take part in our mission to make Machine Learning affordable.
 
 # License
 
