@@ -50,7 +50,7 @@ https://teachablemachine.withgoogle.com/models/mHPehnXQd/
 
 1. Here's a quick example on how to load the model in your project.
 
-```
+```javascript
 const TeachableMachine = require("@sashido/teachablemachine-node");
 
 const model = new TeachableMachine({
@@ -68,7 +68,7 @@ model.classify({
 
 2. Here's a quick example with Express.
 
-```
+```javascript
 const express = require("express");
 const TeachableMachine = require("@sashido/teachablemachine-node");
 
