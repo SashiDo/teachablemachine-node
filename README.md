@@ -25,7 +25,7 @@ yarn add @sashido/teachablemachine-node
 
 ### Create you own Model with Teachable Machine
 
-1. A fundamental first step is to [gather the samples](https://youtu.be/DFBbSTvtpy4) for your Teachable Machine Model. Use your camera to collect data or upload some preselected images.
+1. [Gathering samples] is the fundamental first step  (https://youtu.be/DFBbSTvtpy4) for your Teachable Machine Model. Use your camera to collect data or upload some preselected images.
 
 2. [Train your Teachable Machine](https://teachablemachine.withgoogle.com/train?action=onboardOpen&id=CO67EQ0ZWgA) image model. Once certain it returns valid results, hit the Export option.
 
@@ -65,14 +65,14 @@ const model = new TeachableMachine({
 
 model.classify({
   imageUrl: "https://media-blog.sashido.io/content/images/2020/09/SashiDo_Dog.jpg",
-}).then((results) => {
-  console.log("Results:", r);
+}).then((predictions) => {
+  console.log("Predictions:", r);
 }).catch((e) => {
   console.log("ERROR", e);
 });
 ```
 
-2. Here's a quick example with Express.
+2. And the alternative for all Express fans.
 
 ```javascript
 const express = require("express");
@@ -90,12 +90,12 @@ app.get("/image/classify", async (req, res) => {
 
   return model.classify({
     imageUrl: url,
-  }).then((results) => {
-    console.log(results);
-    return res.json(results);
+  }).then((predictions) => {
+    console.log(predictions);
+    return res.json(predictions);
   }).catch((e) => {
     console.error(e);
-    res.status(500).send("Something is wrong!")
+    res.status(500).send("Something went wrong!")
   });
 });
 
@@ -108,13 +108,13 @@ app.listen(port, () => {
 
 In the long run we will add more options, so you can train and load all kinds of Teachable Machine Models.
 
- 1. Add support of Pose Models. 
+ - Add support of Pose Models. 
  
- 2. Add support of Audio Models. 
+ - Add support of Audio Models. 
  
- 3. Add support for Gifs. 
+ - Add support for Gifs. 
  
- 4. Add support for Videos.
+ - Add support for Videos.
  
 We would love to have your opinion which's the one you would like to see supported first. Don't be shy and drop us a line at hello@sashido.io. 
 
