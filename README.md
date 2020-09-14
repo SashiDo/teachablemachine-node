@@ -1,6 +1,10 @@
 # SashiDo Teachable Machine Node v1.0.0
 
-The package empowers you to load any image classification model trained with Teachable Machine tool in a Node.Js project.
+# About
+
+Google's Teachable Machine 2.0 makes AI easy for everyone, by offering a fast and fun way to train a real TensorFlow.js Machine Learning Models without any coding required. You can train the computer to recognize images, sounds, & poses, using your camera or your own dataset. 
+
+The v.1.0.0 of this package empowers you to load any image classification model trained with Teachable Machine tool in a Node.Js project. Check out the [Roadmap](#Roadmap) of what comes next.
 
 # Install
 
@@ -21,15 +25,17 @@ yarn add @sashido/teachablemachine-node
 
 ### Create you own Model with Teachable Machine
 
-1. Train and your [Teachable Machine](https://teachablemachine.withgoogle.com/train) image model. Once certain it returns valid results, hit the Export option.
+1. A fundamental first step is to [gather the samples](https://youtu.be/DFBbSTvtpy4) for your Teachable Machine Model. Use your camera to collect data or upload some preselected images.
+
+2. [Train your Teachable Machine](https://teachablemachine.withgoogle.com/train?action=onboardOpen&id=CO67EQ0ZWgA) image model. Once certain it returns valid results, hit the Export option.
 
 ![](https://media-blog.sashido.io/content/images/2020/09/tm_export_model.png)
 
-2. Make sure that you select Tensorflow.js format when exporting. That way your model will be uploaded (for free) and you will receive an access URL.
+3. Make sure that you select Tensorflow.js format when exporting. That way your model will be uploaded (for free) and you will receive an access URL.
 
 ![  ](https://media-blog.sashido.io/content/images/2020/08/export_tendorflow.js.png)
 
-3. Pass the URL to SashiDoTeachable to load the model. Next, let it have the image URL and call `classify` to get the predictions.
+4. Pass the URL to SashiDoTeachable to load the model. Next, let it have the image URL and call `classify` to get the predictions.
 
 ### Play around with the model that SashiDo Team already trained.
 
@@ -97,6 +103,20 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 ```
+
+# Roadmap
+
+In the long run we will add more options, so you can train and load all kinds of Teachable Machine Models.
+
+ 1. Add support of Pose Models. 
+ 
+ 2. Add support of Audio Models. 
+ 
+ 3. Add support for Gifs. 
+ 
+ 4. Add support for Videos.
+ 
+We would love to have your opinion which's the one you would like to see supported first. Don't be shy and drop us a line at hello@sashido.io. 
 
 # Contribute
 
