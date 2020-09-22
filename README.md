@@ -1,14 +1,14 @@
-# Teachable Machine Node v1.0.0
+# Teachable Machine Node
 
 ![teachable-machine-cover](https://media-blog.sashido.io/content/images/2020/09/teachable-machine-cover.png)
 
 # About
 
-**Teachable Machine Node v.1.0.0** empowers you to load any image classification model trained with Google's Teachable Machine tool in a Node.Js project.
+**Teachable Machine Node** empowers you to load any image classification model trained with Google's Teachable Machine tool in a Node.Js project.
 
-[Teachable Machine](https://teachablemachine.withgoogle.com/) makes AI easy for everyone, by offering a fast and fun way to train a real TensorFlow.js Machine Learning Models without any coding required. You can train the computer to recognize images, sounds, & poses, using your camera or your own dataset. 
+[Teachable Machine](https://teachablemachine.withgoogle.com/) makes AI easy for everyone, by offering a fast and fun way to train a real TensorFlow.js Machine Learning Models without any coding required. You can train the computer to recognize images, sounds, & poses, using your camera or your own dataset.
 
-For now, Teachable Machine Node v.1.0.0 holds suport only for image models, but we won't stop here. Check out the [Roadmap](#Roadmap) of what comes next!
+For now, Teachable Machine Node holds suport only for image models, but we won't stop here. Check out the [Roadmap](#Roadmap) of what comes next!
 
 # Install
 
@@ -31,7 +31,7 @@ yarn add @sashido/teachablemachine-node
 
 1. [Gathering samples](https://youtu.be/DFBbSTvtpy4) is the fundamental first step to your Teachable Machine Model. Use your camera to collect data or upload some preselected images.
 
-2. [Train your Teachable Machine Image Model](https://teachablemachine.withgoogle.com/train?action=onboardOpen&id=CO67EQ0ZWgA). 
+2. [Train your Teachable Machine Image Model](https://teachablemachine.withgoogle.com/train?action=onboardOpen&id=CO67EQ0ZWgA).
 
 ![](https://media-blog.sashido.io/content/images/2020/09/tm_export_model.png)
 
@@ -117,15 +117,15 @@ app.listen(port, () => {
 
 In the long run, we will add more options, so you can train and load all kinds of Teachable Machine Models.
 
- 1. Add support for Pose Models. 
- 
- 2. Add support for Audio Models. 
- 
- 3. Add support for Gifs. 
- 
+ 1. Add support for Pose Models.
+
+ 2. Add support for Audio Models.
+
+ 3. Add support for Gifs.
+
  4. Add support for Videos.
- 
-We would love to have your opinion which's the one you would like to see supported first. Don't be shy and drop us a line at hello@sashido.io. 
+
+We would love to have your opinion which's the one you would like to see supported first. Don't be shy and drop us a line at hello@sashido.io.
 
 # Contribute
 
