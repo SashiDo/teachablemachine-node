@@ -1,32 +1,27 @@
+global.BigInt = require("bigint-polyfill");
+global.fetch = require("node-fetch");
+
 const tmImage = require("@teachablemachine/image");
 const isImageUrl = require('is-image-url');
 const canvas = require("canvas");
+
 const { JSDOM } = require("jsdom");
 const dom = new JSDOM("");
-
-
-global.fetch = require("node-fetch");
 global.document = dom.window.document;
 global.HTMLVideoElement = dom.window.HTMLVideoElement;
 
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
-
-const retryOperation = (operation, delay, times, retriesCounter = 0) => new Promise((resolve, reject) => {
+const retryOperation = (operation, delay, times) => new Promise((resolve, reject) => {
   return operation()
     .then(({ cb }) => {
       return resolve(cb());
     })
     .catch(({ message }) => {
-      if (retriesCounter === 0) {
-        console.info("[@sashido/teachablemachine-node] -", message);
-      }
-
       if (times - 1 > 0) {
-        retriesCounter++;
         return wait(delay)
-          .then(retryOperation.bind(null, operation, delay, times - 1, retriesCounter))
+          .then(retryOperation.bind(null, operation, delay, times - 1))
           .then(resolve)
           .catch(reject);
       }
@@ -41,15 +36,17 @@ const byProbabilty = (predictionA, predictionB) => {
   return 0;
 }
 
-class SashiDoTeachable {
+
+class SashiDoTeachableMachine {
   constructor(params) {
     this.loadModel(params);
   }
 
-
   async loadModel({ modelUrl }) {
     if (!modelUrl || modelUrl === "") {
       console.error("[@sashido/teachablemachine-node] -", "Missing model URL!");
+      this.error = "Missing model URL!";
+      return null;
     }
 
     try {
@@ -59,21 +56,32 @@ class SashiDoTeachable {
     }
   }
 
+  async checkModel(cb) {
+    const { model } = this;
+
+    if (model) {
+      return Promise.resolve({ cb });
+    }
+
+    return Promise.reject({ message: "Loading model" });
+  }
+
 
   async classify(params) {
-    const { model } = this;
     const { imageUrl } = params;
 
     if (!isImageUrl(imageUrl)) {
-      console.error("[@sashido/teachablemachine-node] -", "Image URL is not valid!");
       return Promise.reject({ error: "Image URL is not valid!" });
     }
 
-    if (!model) {
-      console.error("[@sashido/teachablemachine-node] -", "Model is not ready!");
-      return Promise.reject({ error: "Model is not ready!" });
+    if (this.error) {
+      return Promise.reject({ error: this.error });
     }
 
+    return retryOperation(() => this.checkModel(() => this.inference(params)), 1000, 20); // method, delay, retries
+  }
+
+  async inference({ imageUrl }) {
     try {
       const image = new canvas.Image();
       image.src = imageUrl;
@@ -81,10 +89,9 @@ class SashiDoTeachable {
       const predictions = await this.model.predict(image);
       return predictions.sort(byProbabilty);
     } catch (error) {
-      console.error("[@sashido/teachablemachine-node] -", error);
       return Promise.reject({ error });
     }
   }
 }
 
-module.exports = SashiDoTeachable;
+module.exports = SashiDoTeachableMachine;
