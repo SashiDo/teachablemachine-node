@@ -30,6 +30,15 @@ const retryOperation = (operation, delay, times) => new Promise((resolve, reject
     });
 });
 
+const getHTMLCanvasElement = (imageUrl) => {
+  return new Promise((resolve, reject) => {
+    const image = new canvas.Image();
+    image.onload = () => resolve(image);
+    image.onerror = (e) => reject(e);
+    image.src = imageUrl;
+  });
+}
+
 const byProbabilty = (predictionA, predictionB) => {
   if (predictionA.probability > predictionB.probability) return -1;
   if (predictionA.probability < predictionB.probability) return 1;
@@ -83,9 +92,7 @@ class SashiDoTeachableMachine {
 
   async inference({ imageUrl }) {
     try {
-      const image = new canvas.Image();
-      image.src = imageUrl;
-
+      const image = await getHTMLCanvasElement(imageUrl);
       const predictions = await this.model.predict(image);
       return predictions.sort(byProbabilty);
     } catch (error) {
