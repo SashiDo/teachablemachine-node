@@ -9,7 +9,7 @@
 [Teachable Machine](https://teachablemachine.withgoogle.com/) makes AI easy for everyone, by offering a fast and fun way to train a real TensorFlow.js Machine Learning Models without any coding required. You can train the computer to recognize images, sounds, & poses, using your camera or your own dataset. Check [The Awesome Teachable Machine List](https://github.com/SashiDo/awesome-teachable-machine) full of useful resources and amazing projects to gain some cool ideas.
 
 
-For now, Teachable Machine Node holds suport only for image models, but we won't stop here. Check out the [Roadmap](#Roadmap) of what comes next!
+For now, Teachable Machine Node holds support only for image models, but we won't stop here. Check out the [Roadmap](#Roadmap) of what comes next!
 
 # Install
 
