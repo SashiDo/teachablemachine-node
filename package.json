@@ -1,6 +1,6 @@
 {
   "name": "@sashido/teachablemachine-node",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Simplifies integration with Teachable Machine models from Google",
   "author": {
     "name": "Team SashiDo",
@@ -26,13 +26,10 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "@teachablemachine/image": "^0.8.4",
     "@tensorflow/tfjs": "^2.3.0",
-    "bigint-polyfill": "^0.1.0",
-    "canvas": "2.6.1",
     "is-image-url": "^1.1.8",
-    "jsdom": "^16.4.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "pureimage": "^0.2.5"
   },
   "devDependencies": {},
   "scripts": {
