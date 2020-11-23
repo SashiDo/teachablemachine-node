@@ -34,5 +34,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+  "contributors": [
+    "Yair Bonastre <bonastreyair@gmail.com> (https://github.com/bonastreyair)"
+  ]
 }
