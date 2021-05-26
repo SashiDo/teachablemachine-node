@@ -29,6 +29,7 @@
     "@tensorflow/tfjs": "^2.3.0",
     "is-image-url": "^1.1.8",
     "node-fetch": "^2.6.0",
+    "parse-data-url": "^4.0.1",
     "pureimage": "^0.2.5"
   },
   "devDependencies": {},

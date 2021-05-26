@@ -1,9 +1,10 @@
 global.fetch = require("node-fetch");
 
-const { Readable } = require('stream');
+const { Readable } = require('stream')
 const tf = require('@tensorflow/tfjs')
 const PImage = require('pureimage')
-const isImageUrl = require('is-image-url');
+const isImageUrl = require('is-image-url')
+const parseDataUrl = require('parse-data-url')
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
@@ -125,7 +126,7 @@ class SashiDoTeachableMachine {
   async classify(params) {
     const { imageUrl } = params;
 
-    if (!isImageUrl(imageUrl)) {
+    if ((!imageUrl.startsWith('data:image/')) && (!isImageUrl(imageUrl))) {
       return Promise.reject({ error: "Image URL is not valid!" });
     }
 
@@ -138,10 +139,22 @@ class SashiDoTeachableMachine {
 
   async inference({ imageUrl }) {
     try {
-      const data = await fetch(imageUrl);
+      let data
+      let buffer
+      let contentType
 
-      const contentType = data.headers.get("Content-Type");
-      const buffer = await data.buffer();
+      if (imageUrl.startsWith('data:image/')) {
+        data = parseDataUrl(imageUrl)
+        
+        contentType = data.contentType
+        buffer = data.toBuffer()
+      } else {
+        data = await fetch(imageUrl);
+
+        contentType = data.headers.get("Content-Type");
+        buffer = await data.buffer();
+      }
+      
       const stream = bufferToStream(buffer);
       let imageBitmap;
 
