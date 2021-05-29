@@ -1,10 +1,10 @@
 global.fetch = require("node-fetch");
 
-const { Readable } = require('stream')
-const tf = require('@tensorflow/tfjs')
-const PImage = require('pureimage')
-const isImageUrl = require('is-image-url')
-const parseDataUrl = require('parse-data-url')
+const { Readable } = require('stream');
+const tf = require('@tensorflow/tfjs');
+const PImage = require('pureimage');
+const isImageUrl = require('is-image-url');
+const parseDataUrl = require('parse-data-url');
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
@@ -28,7 +28,7 @@ const retryOperation = (operation, delay, times) => new Promise((resolve, reject
 const bufferToStream = (binary) => {
   const readableInstanceStream = new Readable({
     read() {
-      this.push(binary)
+      this.push(binary);
       this.push(null);
     }
   });
@@ -77,7 +77,7 @@ const getTopKClasses = async (logits, classes) => {
     topkIndices[i] = valuesAndIndices[i].index;
   }
 
-  const topClassesAndProbs = []
+  const topClassesAndProbs = [];
   for (let i = 0; i < topkIndices.length; i++) {
     topClassesAndProbs.push({
       class: classes[topkIndices[i]],
@@ -101,7 +101,7 @@ class SashiDoTeachableMachine {
 
     try {
       const modelURL = `${modelUrl}model.json`;
-      const response = await fetch(`${modelUrl}metadata.json`)
+      const response = await fetch(`${modelUrl}metadata.json`);
       const body = await response.text();
       this.model = await tf.loadLayersModel(modelURL);
       this.model.classes = JSON.parse(body).labels;
@@ -139,15 +139,15 @@ class SashiDoTeachableMachine {
 
   async inference({ imageUrl }) {
     try {
-      let data
-      let buffer
-      let contentType
+      let data;
+      let buffer;
+      let contentType;
 
       if (imageUrl.startsWith('data:image/')) {
-        data = parseDataUrl(imageUrl)
+        data = parseDataUrl(imageUrl);
         
-        contentType = data.contentType
-        buffer = data.toBuffer()
+        contentType = data.contentType;
+        buffer = data.toBuffer();
       } else {
         data = await fetch(imageUrl);
 
