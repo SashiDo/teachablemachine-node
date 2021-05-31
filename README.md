@@ -42,7 +42,7 @@ Check the `Advanced` option for further insights on the model performance and ac
 
 ![  ](https://media-blog.sashido.io/content/images/2020/08/export_tendorflow.js.png)
 
-4. Pass the URL to the teachablemachine-node to load the model. Next, let it have the image URL and call `classify` to get the predictions.
+4. Pass the URL to the teachablemachine-node to load the model. Next, let it have the image and call `classify` to get the predictions. You can pass the image URL or deliver it in base 64. It's up to your preference. :) 
 
 ### Play around with our pre-trained 'Is It A Dog?' model.
 
