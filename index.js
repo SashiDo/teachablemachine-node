@@ -1,8 +1,7 @@
 global.fetch = require("node-fetch");
 
 const { Readable } = require('stream');
-const tf = require('@tensorflow/tfjs');
-const PImage = require('pureimage');
+const tf = require('@tensorflow/tfjs-node');
 const isImageUrl = require('is-image-url');
 const parseDataUrl = require('parse-data-url');
 
@@ -36,11 +35,9 @@ const bufferToStream = (binary) => {
   return readableInstanceStream;
 }
 
-const predict = async (imgElement, model) => {
+const predict = async (imgTensor, model) => {
   const logits = tf.tidy(() => {
-    // tf.browser.fromPixels() returns a Tensor from an image element.
-    let img = tf.browser.fromPixels(imgElement).toFloat();
-    img = tf.image.resizeNearestNeighbor(img, [model.inputs[0].shape[1], model.inputs[0].shape[2]]);
+    let img = tf.image.resizeNearestNeighbor(imgTensor, [model.inputs[0].shape[1], model.inputs[0].shape[2]]);
 
     const offset = tf.scalar(127.5);
     // Normalize the image from [0, 255] to [-1, 1].
@@ -145,7 +142,7 @@ class SashiDoTeachableMachine {
 
       if (imageUrl.startsWith('data:image/')) {
         data = parseDataUrl(imageUrl);
-        
+
         contentType = data.contentType;
         buffer = data.toBuffer();
       } else {
@@ -154,20 +151,22 @@ class SashiDoTeachableMachine {
         contentType = data.headers.get("Content-Type");
         buffer = await data.buffer();
       }
-      
-      const stream = bufferToStream(buffer);
-      let imageBitmap;
 
-      if ((/png/).test(contentType)) {
-        imageBitmap = await PImage.decodePNGFromStream(stream);
+      let imagesTensor3D;
+
+      if ((/png/).test(contentType) || (/jpe?g/).test(contentType)) {
+        imagesTensor3D = [tf.node.decodeImage(buffer)];
       }
 
-      if ((/jpe?g/).test(contentType)) {
-        imageBitmap = await PImage.decodeJPEGFromStream(stream);
+      if ((/gif/).test(contentType)) {
+        // tensor 4d has structure [num_frames, height, width, 3]
+        const imageTensor4D = tf.node.decodeGif(buffer)
+        imagesTensor3D = tf.node.unstack(imageTensor4D)
       }
 
-      const predictions = await predict(imageBitmap, this.model);
-      return predictions;
+      const predictions = await Promise.all(imagesTensor3D.map(imageTensor3D => predict(imageTensor3D, this.model)));
+      // return one prediction if running inference on single image and and array if running on gif
+      return predictions.length == 1 ? predictions[0] : predictions
     } catch (error) {
       return Promise.reject({ error });
     }

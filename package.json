@@ -26,13 +26,11 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "@tensorflow/tfjs": "^2.3.0",
+    "@tensorflow/tfjs-node": "3.8.0",
     "is-image-url": "^1.1.8",
     "node-fetch": "^2.6.0",
-    "parse-data-url": "^4.0.1",
-    "pureimage": "^0.2.5"
+    "parse-data-url": "^4.0.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
