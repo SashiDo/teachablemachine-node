@@ -161,7 +161,7 @@ class SashiDoTeachableMachine {
       if ((/gif/).test(contentType)) {
         // tensor 4d has structure [num_frames, height, width, 3]
         const imageTensor4D = tf.node.decodeGif(buffer)
-        imagesTensor3D = tf.node.unstack(imageTensor4D)
+        imagesTensor3D = tf.unstack(imageTensor4D)
       }
 
       const predictions = await Promise.all(imagesTensor3D.map(imageTensor3D => predict(imageTensor3D, this.model)));
