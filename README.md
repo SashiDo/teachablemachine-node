@@ -122,9 +122,7 @@ In the long run, we will add more options, so you can train and load all kinds o
 
  2. Add support for Audio Models.
 
- 3. Add support for Gifs.
-
- 4. Add support for Videos.
+ 3. Add support for Videos.
 
 We would love to have your opinion which's the one you would like to see supported first. Don't be shy and drop us a line at hello@sashido.io.
 
