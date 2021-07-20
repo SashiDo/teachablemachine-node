@@ -4,7 +4,8 @@ const { Readable } = require('stream');
 const tf = require('@tensorflow/tfjs-node');
 const isImageUrl = require('is-image-url');
 const parseDataUrl = require('parse-data-url');
-
+const posenet = require('@tensorflow-models/posenet')
+const { padAndResizeTo } = require("@tensorflow-models/posenet/dist/util");
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
 const retryOperation = (operation, delay, times) => new Promise((resolve, reject) => {
@@ -54,6 +55,14 @@ const predict = async (imgTensor, model) => {
   return predictions;
 }
 
+const predictPose = (imageTensor3D, model, posenetModel) => estimatePose(imageTensor3D, posenetModel)
+  .then(
+    posenetOutput => model.predict(tf.tensor([posenetOutput]))
+  ).then(
+    logits => getTopKClasses(logits, model.classes)
+  )
+
+
 const getTopKClasses = async (logits, classes) => {
   const values = await logits.data();
   const topK = Math.min(classes.length, values.length);
@@ -84,6 +93,46 @@ const getTopKClasses = async (logits, classes) => {
   return topClassesAndProbs;
 }
 
+const estimatePoseOutputs = async (sample, posenetModel) => {
+  const inputResolution = posenetModel.inputResolution;
+
+  const { resized, padding } = padAndResizeTo(sample, inputResolution);
+
+  const { heatmapScores, offsets, displacementFwd, displacementBwd }
+    = await posenetModel.baseModel.predict(resized);
+
+  resized.dispose();
+
+  return { heatmapScores, offsets, displacementFwd, displacementBwd, padding };
+
+
+}
+const estimatePose = async (sample, posenetModel) => {
+  const {
+    heatmapScores,
+    offsets,
+
+  } = await estimatePoseOutputs(sample, posenetModel);
+
+  const posenetOutput = poseOutputsToAray(
+    heatmapScores,
+    offsets,
+  );
+  return posenetOutput
+}
+
+const poseOutputsToAray = (
+  heatmapScores,
+  offsets
+) => {
+  const axis = 2;
+  const concat = tf.concat([heatmapScores, offsets], axis);
+  const concatArray = concat.dataSync();
+
+  concat.dispose();
+
+  return concatArray;
+}
 class SashiDoTeachableMachine {
   constructor(params) {
     this.loadModel(params);
@@ -99,9 +148,14 @@ class SashiDoTeachableMachine {
     try {
       const modelURL = `${modelUrl}model.json`;
       const response = await fetch(`${modelUrl}metadata.json`);
-      const body = await response.text();
+      const body = JSON.parse(await response.text());
       this.model = await tf.loadLayersModel(modelURL);
-      this.model.classes = JSON.parse(body).labels;
+      this.model.classes = body.labels;
+      this.model.type = body.packageName
+      if (body.packageName === "@teachablemachine/pose") {
+        this.posenetModel = await posenet.load(body.posenet)
+      }
+
       // console.log('@@@', this.model)
 
     } catch (e) {
@@ -163,8 +217,15 @@ class SashiDoTeachableMachine {
         const imageTensor4D = tf.node.decodeGif(buffer)
         imagesTensor3D = tf.unstack(imageTensor4D)
       }
-
-      const predictions = await Promise.all(imagesTensor3D.map(imageTensor3D => predict(imageTensor3D, this.model)));
+      let predictions;
+      switch (this.model.type) {
+        case "@teachablemachine/pose":
+          predictions = await Promise.all(imagesTensor3D.map(imageTensor3D => predictPose(imageTensor3D, this.model, this.posenetModel)))
+          break;
+        default:
+          predictions = await Promise.all(imagesTensor3D.map(imageTensor3D => predict(imageTensor3D, this.model)));
+          break;
+      }
       // return one prediction if running inference on single image and and array if running on gif
       return predictions.length == 1 ? predictions[0] : predictions
     } catch (error) {

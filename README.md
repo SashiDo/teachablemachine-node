@@ -118,11 +118,9 @@ app.listen(port, () => {
 
 In the long run, we will add more options, so you can train and load all kinds of Teachable Machine Models.
 
- 1. Add support for Pose Models.
+ 1. Add support for Audio Models.
 
- 2. Add support for Audio Models.
-
- 3. Add support for Videos.
+ 2. Add support for Videos.
 
 We would love to have your opinion which's the one you would like to see supported first. Don't be shy and drop us a line at hello@sashido.io.
 

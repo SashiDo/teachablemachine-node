@@ -26,6 +26,7 @@
   ],
   "main": "index.js",
   "dependencies": {
+    "@tensorflow-models/posenet": "^2.2.2",
     "@tensorflow/tfjs-node": "3.8.0",
     "is-image-url": "^1.1.8",
     "node-fetch": "^2.6.0",
