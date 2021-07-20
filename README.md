@@ -9,7 +9,7 @@
 [Teachable Machine](https://teachablemachine.withgoogle.com/) makes AI easy for everyone, by offering a fast and fun way to train a real TensorFlow.js Machine Learning Models without any coding required. You can train the computer to recognize images, sounds, & poses, using your camera or your own dataset. Check [The Awesome Teachable Machine List](https://github.com/SashiDo/awesome-teachable-machine) full of useful resources and amazing projects to gain some cool ideas.
 
 
-For now, Teachable Machine Node holds support only for image models, but we won't stop here. Check out the [Roadmap](#Roadmap) of what comes next!
+For now, Teachable Machine Node holds support only for image and pose models, but we won't stop here. Check out the [Roadmap](#Roadmap) of what comes next!
 
 # Install
 
@@ -32,7 +32,7 @@ yarn add @sashido/teachablemachine-node
 
 1. [Gathering samples](https://youtu.be/DFBbSTvtpy4) is the fundamental first step to your Teachable Machine Model. Use your camera to collect data or upload some preselected images.
 
-2. [Train your Teachable Machine Image Model](https://teachablemachine.withgoogle.com/train?action=onboardOpen&id=CO67EQ0ZWgA).
+2. [Train your Teachable Machine Image or Pose Model](https://teachablemachine.withgoogle.com/train?action=onboardOpen&id=CO67EQ0ZWgA).
 
 ![](https://media-blog.sashido.io/content/images/2020/09/tm_export_model.png)
 
